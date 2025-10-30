@@ -179,6 +179,19 @@ async def health_check():
         database=db_status
     )
 
+# ==================== Include API Routers ====================
+
+# Import the job routes router
+from app.api.v1.routes.job_routes import router as job_router
+
+# Include the job routes with the correct prefix
+app.include_router(
+    job_router,
+    prefix=settings.api_v1_prefix,
+    tags=["Jobs"]
+)
+
+logger.info(f"✅ Job routes registered at {settings.api_v1_prefix}")
 
 
 # ==================== Application Info ====================
