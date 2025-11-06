@@ -1,12 +1,18 @@
 """
 Background worker for AI audio generation tasks.
+Now with Google Cloud Storage integration.
 """
 import asyncio
+import os
 from datetime import datetime, timezone
 
 from app.db.operations.job_operations import update_job_status
 from app.models.enums import JobStatus
-from app.services.gemini_service import generate_script_from_pdf
+from app.services.gemini_service import (
+    generate_script_from_pdf,
+    generate_audio_from_script
+)
+from app.services.gcs_service import upload_audio_to_gcs, generate_signed_url
 from app.utils.logger import logger
 
 
@@ -20,10 +26,14 @@ async def generate_audio_task(
     """
     Background task for generating audio from PDF.
     
-    Phase 1: Generate script using Gemini LLM
-    Phase 2: Generate audio using Gemini TTS (Step 7)
-    Phase 3: Upload to GCS and get signed URL (Step 8)
+    Complete workflow:
+    1. Generate script using Gemini LLM
+    2. Generate audio using Gemini TTS
+    3. Upload to Google Cloud Storage
+    4. Generate signed URL for access
     """
+    temp_file_path = None
+    
     try:
         logger.info(f"🎬 Starting audio generation for job: {job_id}")
         
@@ -43,26 +53,43 @@ async def generate_audio_task(
         
         logger.info(f"✅ Script generated for job {job_id}")
         logger.info(f"   Title: {script_data['title']}")
-        logger.info(f"   Speakers: {len(script_data['speakers'])}")
         logger.info(f"   Dialogue turns: {len(script_data['dialogue'])}")
         
-        # ========== Phase 3: Generate Audio (TODO: Step 7) ==========
-        # TODO: Call Gemini TTS to generate audio from script
-        logger.warning(f"⚠️ Audio generation not yet implemented (Step 7)")
+        # ========== Phase 3: Generate Audio ==========
+        logger.info(f"🎙️ Generating audio for job: {job_id}")
         
-        # ========== Phase 4: Upload to GCS (TODO: Step 8) ==========
-        # TODO: Upload audio file to Google Cloud Storage
-        logger.warning(f"⚠️ GCS upload not yet implemented (Step 8)")
+        audio_bytes = await generate_audio_from_script(script_data)
         
-        # Placeholder: Mark as completed with script data
+        logger.info(f"✅ Audio generated: {len(audio_bytes)} bytes")
+        
+        # ========== Phase 4: Upload to GCS ==========
+        logger.info(f"☁️ Uploading audio to Google Cloud Storage...")
+        
+        blob_name = await upload_audio_to_gcs(
+            audio_bytes=audio_bytes,
+            job_id=job_id,
+            content_type="audio/mpeg"
+        )
+        
+        logger.info(f"✅ Audio uploaded to GCS: {blob_name}")
+        
+        # ========== Phase 5: Generate Signed URL ==========
+        logger.info(f"🔗 Generating signed URL...")
+        
+        signed_url = await generate_signed_url(blob_name)
+        
+        logger.info(f"✅ Signed URL generated")
+        
+        # ========== Phase 6: Mark as Completed ==========
         await update_job_status(
             job_id,
             JobStatus.COMPLETED.value,
-            audio_url=f"Script generated with {len(script_data['dialogue'])} turns",
+            audio_url=signed_url,
             completed_at=datetime.now(timezone.utc)
         )
         
-        logger.info(f"✅ Job {job_id} completed (script generation phase)")
+        logger.info(f"✅ Job {job_id} completed successfully")
+        logger.info(f"   Audio URL: {signed_url[:100]}...")
         
     except Exception as e:
         logger.error(f"❌ Job {job_id} failed: {e}", exc_info=True)
@@ -73,3 +100,12 @@ async def generate_audio_task(
             error_message=str(e),
             completed_at=datetime.now(timezone.utc)
         )
+    
+    finally:
+        # Cleanup: Remove temporary local file if it exists
+        if temp_file_path and os.path.exists(temp_file_path):
+            try:
+                os.remove(temp_file_path)
+                logger.info(f"🗑️ Temporary file cleaned up: {temp_file_path}")
+            except Exception as cleanup_error:
+                logger.warning(f"⚠️ Failed to cleanup temp file: {cleanup_error}")
