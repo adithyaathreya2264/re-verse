@@ -23,12 +23,26 @@ class Settings(BaseSettings):
     google_api_key: str = Field(..., description="Google Gemini API key")
     
     # ==================== Google Cloud Storage ====================
-    gcs_bucket_name: str = Field(..., description="GCS bucket name for audio files")
-    gcs_project_id: str = Field(..., description="Google Cloud project ID")
-    google_application_credentials: str = Field(
-        default="./service-account.json",
-        description="Path to GCS service account JSON"
+    # Google Cloud Storage Settings
+    gcs_project_id: str = "your-project-id"
+    gcs_bucket_name: str = "re-verse-audio"
+    gcs_credentials_path: str = "./re-verse-476206-4e8cc369c480.json"
+    gcs_signed_url_expiration_days: int = 7
+    
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False
     )
+    
+    # Helper methods
+    def get_gcs_blob_name(self, job_id: str) -> str:
+        """Generate GCS blob name for job audio."""
+        return f"podcasts/{job_id}.mp3"
+    
+    def get_signed_url_expiration_seconds(self) -> int:
+        """Get signed URL expiration in seconds."""
+        return self.gcs_signed_url_expiration_days * 24 * 60 * 60
     
     # ==================== API Configuration ====================
     api_v1_prefix: str = Field(default="/api/v1", description="API v1 route prefix")
