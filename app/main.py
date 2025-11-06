@@ -3,6 +3,7 @@ RE-VERSE FastAPI Application
 Main entry point for the Podcast Audio Generator API.
 """
 from contextlib import asynccontextmanager
+from app.services.gcs_service import GCSService
 from datetime import datetime, timezone
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,45 +12,41 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
 
 from app.core.config import settings
-from app.db.mongodb import MongoDB
+from app.db.mongodb import connect_to_database, disconnect_from_database, MongoDB
 from app.utils.logger import logger
 from app.models.job_model import ErrorResponse, HealthResponse
 
 
-# ==================== Lifespan Context Manager ====================
+# ==================== Application Lifespan ====================
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Lifespan context manager for startup and shutdown events.
-    Handles MongoDB connection lifecycle.
-    
-    Code before yield runs on startup.
-    Code after yield runs on shutdown.
+    Application lifespan events.
+    Handles startup and shutdown logic.
     """
     # ========== STARTUP ==========
     logger.info("🚀 Starting RE-VERSE application...")
     
-    try:
-        # Connect to MongoDB
-        await MongoDB.connect_to_database()
-        logger.info("✅ Application startup complete")
-    except Exception as e:
-        logger.error(f"❌ Failed to start application: {e}")
-        raise
+    # Connect to MongoDB
+    await connect_to_database()
     
-    # ========== APPLICATION RUNNING ==========
+    # Initialize Google Cloud Storage
+    try:
+        from app.services.gcs_service import GCSService
+        GCSService.initialize()
+        logger.info("✅ GCS initialized successfully")
+    except Exception as e:
+        logger.error(f"⚠️ GCS initialization failed: {e}")
+        logger.warning("⚠️ Application will continue without cloud storage")
+    
+    logger.info("✅ Application startup complete")
+    
     yield
     
     # ========== SHUTDOWN ==========
-    logger.info("🛑 Shutting down RE-VERSE application...")
-    
-    try:
-        # Close MongoDB connection
-        await MongoDB.close_database_connection()
-        logger.info("✅ Application shutdown complete")
-    except Exception as e:
-        logger.error(f"❌ Error during shutdown: {e}")
+    logger.info("👋 Shutting down RE-VERSE application...")
+    await disconnect_from_database()
 
 
 # ==================== FastAPI Application ====================
