@@ -33,3 +33,6 @@ PyPDF2==3.0.1
 
 # PDF Generator Library
 reportlab==4.2.5
+
+# Google Cloud Storage
+google-cloud-storage==2.18.2
