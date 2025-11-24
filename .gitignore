@@ -82,3 +82,6 @@ test_audio/
 # Google Cloud credentials
 re-verse-476206-4e8cc369c480.json
 *.json.key
+
+#groq API Key
+groq_api_key.txt
