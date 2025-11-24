@@ -6,6 +6,7 @@ import uuid
 from datetime import datetime, timezone
 from fastapi import APIRouter, BackgroundTasks, File, Form, UploadFile, HTTPException, status
 from typing import Optional
+from fastapi import Query
 
 from app.models.enums import JobStatus, StyleType, DurationType
 from app.models.job_model import JobResponse, JobResultResponse, ErrorResponse
@@ -232,3 +233,30 @@ async def get_job_status(job_id: str):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An error occurred while retrieving job status"
         )
+
+@router.get("/history")
+async def get_job_history(job_ids: str = Query(...)):
+    """Get multiple jobs for history display."""
+    try:
+        from app.db.operations.job_operations import get_job_result
+        
+        ids = [id.strip() for id in job_ids.split(",") if id.strip()]
+        jobs = []
+        
+        for job_id in ids:
+            try:
+                job = await get_job_result(job_id)
+                if job:
+                    jobs.append({
+                        "job_id": job_id,
+                        "status": job.get("status", "UNKNOWN"),
+                        "audio_url": job.get("audio_url"),
+                        "created_at": job.get("created_at"),
+                        "title": f"Podcast {job_id[:8]}"
+                    })
+            except:
+                continue
+        
+        return {"jobs": jobs}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
