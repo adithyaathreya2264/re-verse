@@ -8,10 +8,8 @@ from datetime import datetime, timezone
 
 from app.db.operations.job_operations import update_job_status
 from app.models.enums import JobStatus
-from app.services.gemini_service import (
-    generate_script_from_pdf,
-    generate_audio_from_script
-)
+from app.services.gemini_service import generate_script_from_pdf
+from app.services.tts_service import merge_dialogue_to_audio
 from app.services.gcs_service import upload_audio_to_gcs, generate_signed_url
 from app.utils.logger import logger
 
@@ -51,6 +49,18 @@ async def generate_audio_task(
             duration=duration
         )
         
+        dialogue = script_data["dialogue"]
+        speakers = script_data["speakers"]
+
+        voice_map = {
+            speakers[0]["id"]: "en-US-Neural2-D",   # Assign a Google neural voice for speaker 10
+            speakers[1]["id"]: "en-US-Neural2-F"    # ...and another for speaker 2
+        }
+
+        from app.services.tts_service import merge_dialogue_to_audio
+
+        audio_bytes = merge_dialogue_to_audio(dialogue, speakers, voice_map)
+
         logger.info(f"✅ Script generated for job {job_id}")
         logger.info(f"   Title: {script_data['title']}")
         logger.info(f"   Dialogue turns: {len(script_data['dialogue'])}")
@@ -58,7 +68,7 @@ async def generate_audio_task(
         # ========== Phase 3: Generate Audio ==========
         logger.info(f"🎙️ Generating audio for job: {job_id}")
         
-        audio_bytes = await generate_audio_from_script(script_data)
+        
         
         logger.info(f"✅ Audio generated: {len(audio_bytes)} bytes")
         
