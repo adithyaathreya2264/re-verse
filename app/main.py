@@ -17,6 +17,8 @@ from app.utils.logger import logger
 from app.models.job_model import ErrorResponse, HealthResponse
 
 
+
+
 # ==================== Application Lifespan ====================
 
 @asynccontextmanager
@@ -218,3 +220,9 @@ if __name__ == "__main__":
         reload=True,  # Enable auto-reload for development
         log_level=settings.log_level
     )
+
+from fastapi.responses import FileResponse
+
+@app.get("/favicon.ico")
+async def favicon():
+    return FileResponse("static/favicon.ico")
