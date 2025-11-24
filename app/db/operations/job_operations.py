@@ -8,8 +8,10 @@ from bson import ObjectId
 from app.db.mongodb import MongoDB
 from app.core.config import settings
 from app.utils.logger import logger
+from fastapi import APIRouter, HTTPException, Query
+from app.utils.logger import logger
 
-
+router = APIRouter()
 async def create_new_job(job_data: Dict) -> Optional[str]:
     """
     Create a new job document in MongoDB.
