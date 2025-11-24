@@ -1,8 +1,10 @@
 """
-MongoDB connection and management module.
+MongoDB database connection and management.
 """
-import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.errors import ConnectionFailure
+import asyncio
+
 from app.core.config import settings
 from app.utils.logger import logger
 
@@ -75,3 +77,26 @@ def get_database():
         logger.warning("⚠️ Database not connected. Call connect_to_database() first.")
         return None
     return MongoDB.database
+
+
+def get_collection(collection_name: str):
+    """
+    Get a MongoDB collection by name.
+    
+    Args:
+        collection_name: Name of the collection
+        
+    Returns:
+        Collection instance or None if database not connected
+    """
+    db = get_database()
+    if db is None:
+        logger.error(f"❌ Cannot get collection '{collection_name}': Database not connected")
+        return None
+    
+    return db[collection_name]
+
+
+# Add these methods to the MongoDB class
+MongoDB.get_database = staticmethod(get_database)
+MongoDB.get_collection = staticmethod(get_collection)
