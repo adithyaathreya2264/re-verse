@@ -3,46 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RE-VERSE - Podcast Audio Generator</title>
+    <title>RE-VERSE - AI Podcast Generator</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="container">
-        <header>
+        <!-- Header -->
+        <header class="header">
             <h1>🎙️ RE-VERSE</h1>
-            <p class="subtitle">Transform PDFs into Engaging Podcasts</p>
+            <p class="tagline">Transform Documents into Engaging Podcasts with AI</p>
         </header>
 
-        <main>
-            <section class="status-check">
-                <h2>System Status</h2>
-                <button id="checkHealthBtn" class="btn-primary">Check API Health</button>
-                <div id="healthStatus" class="status-display"></div>
-            </section>
+        <!-- Upload Section -->
+        <section class="upload-section" id="uploadSection">
+            <div class="card">
+                <h2>Upload Your Document</h2>
+                
+                <form id="uploadForm" class="upload-form">
+                    <!-- File Upload -->
+                    <div class="form-group">
+                        <label for="pdfFile" class="file-label">
+                            <span class="file-icon">📄</span>
+                            <span id="fileName">Choose PDF file (max 50MB)</span>
+                            <input type="file" id="pdfFile" name="file" accept=".pdf" required>
+                        </label>
+                    </div>
 
-            <section class="info">
-                <h2>About RE-VERSE</h2>
-                <p>
-                    RE-VERSE is an AI-powered application that converts PDF documents 
-                    into natural-sounding, multi-speaker podcast conversations.
-                </p>
-                <ul>
-                    <li>✅ Upload any PDF document</li>
-                    <li>✅ Customize conversation style and duration</li>
-                    <li>✅ Get high-quality MP3 audio</li>
-                    <li>✅ Download and share your podcasts</li>
-                </ul>
-            </section>
+                    <!-- Prompt Input -->
+                    <div class="form-group">
+                        <label for="prompt">Content Focus</label>
+                        <textarea 
+                            id="prompt" 
+                            name="prompt" 
+                            rows="4" 
+                            placeholder="What aspects should the podcast focus on? (e.g., 'Explain the key findings and their practical applications')"
+                            minlength="10"
+                            maxlength="2000"
+                            required
+                        ></textarea>
+                        <span class="char-count">0 / 2000</span>
+                    </div>
 
-            <section class="quick-links">
-                <h2>Quick Links</h2>
-                <a href="/api/docs" class="btn-secondary" target="_blank">📚 API Documentation</a>
-                <a href="/api/redoc" class="btn-secondary" target="_blank">📖 ReDoc</a>
-            </section>
-        </main>
+                    <!-- Style Selection -->
+                    <div class="form-group">
+                        <label for="style">Conversation Style</label>
+                        <select id="style" name="style" required>
+                            <option value="Student-Professor">👨‍🎓 Student-Professor</option>
+                            <option value="Critique">🔍 Critique</option>
+                            <option value="Debate">⚖️ Debate</option>
+                            <option value="Interview">🎤 Interview</option>
+                            <option value="Casual-Explainer">💬 Casual Explainer</option>
+                            <option value="Storytelling">📖 Storytelling</option>
+                        </select>
+                    </div>
 
-        <footer>
-            <p>&copy; 2025 RE-VERSE | Powered by Google Gemini AI</p>
+                    <!-- Duration Selection -->
+                    <div class="form-group">
+                        <label for="duration">Audio Length</label>
+                        <select id="duration" name="duration" required>
+                            <option value="SHORTER">⚡ Shorter (~3-5 min)</option>
+                            <option value="MEDIUM" selected>🎯 Medium (~5-8 min)</option>
+                            <option value="LONGER">📚 Longer (~8-12 min)</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span>Generate Podcast</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="progress-section" id="progressSection" style="display: none;">
+            <div class="card">
+                <h2>Generating Your Podcast...</h2>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">Initializing...</p>
+                </div>
+
+                <div class="status-steps">
+                    <div class="step" id="step1">
+                        <span class="step-icon">📄</span>
+                        <span class="step-text">Extracting text</span>
+                    </div>
+                    <div class="step" id="step2">
+                        <span class="step-icon">🤖</span>
+                        <span class="step-text">Generating script</span>
+                    </div>
+                    <div class="step" id="step3">
+                        <span class="step-icon">🎙️</span>
+                        <span class="step-text">Creating audio</span>
+                    </div>
+                    <div class="step" id="step4">
+                        <span class="step-icon">☁️</span>
+                        <span class="step-text">Uploading</span>
+                    </div>
+                </div>
+
+                <p class="job-id-display">Job ID: <code id="jobIdDisplay"></code></p>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result-section" id="resultSection" style="display: none;">
+            <div class="card">
+                <h2>✅ Your Podcast is Ready!</h2>
+                
+                <!-- Audio Player -->
+                <div class="audio-player">
+                    <audio id="audioPlayer" controls></audio>
+                </div>
+
+                <!-- Download Button -->
+                <a id="downloadBtn" class="btn-secondary" download="podcast.mp3">
+                    <span>⬇️ Download MP3</span>
+                </a>
+
+                <!-- Metadata -->
+                <div class="metadata">
+                    <p><strong>File:</strong> <span id="resultFilename"></span></p>
+                    <p><strong>Style:</strong> <span id="resultStyle"></span></p>
+                    <p><strong>Duration:</strong> <span id="resultDuration"></span></p>
+                    <p><strong>Created:</strong> <span id="resultCreated"></span></p>
+                </div>
+
+                <!-- New Generation Button -->
+                <button class="btn-primary" onclick="resetForm()">
+                    Generate Another Podcast
+                </button>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section class="error-section" id="errorSection" style="display: none;">
+            <div class="card error-card">
+                <h2>❌ Generation Failed</h2>
+                <p class="error-message" id="errorMessage"></p>
+                <button class="btn-primary" onclick="resetForm()">Try Again</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by Gemini AI | RE-VERSE v1.0</p>
         </footer>
     </div>
 
