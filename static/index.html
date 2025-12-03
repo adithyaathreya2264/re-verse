@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RE-VERSE - AI Podcast Generator</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <title>RE-VERSE - AI Podcast Generator</title>
     <link rel="stylesheet" href="/static/css/style.css">
-
-
 </head>
-<body>
-    <div class="app-container">
 
-        <!-- Sidebar (Glass) -->
-        <aside class="sidebar glass-panel" id="sidebar">
-            <div class="sidebar-header">
-                <h2>📚 History</h2>
-                <button class="clear-history-btn" id="clearHistoryBtn" title="Clear history">🗑️</button>
-            </div>
-            <div class="history-list" id="historyList">
-                <p class="empty-history">No podcasts yet</p>
-            </div>
-        </aside>
+<body>
+    <!-- Intro Animation Overlay -->
+    <div id="intro-overlay">
+        <h1 class="intro-text">Welcome to <span class="gradient-text">re-verse</span></h1>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Removed -->
 
         <main class="main-content">
 
             <div class="container">
                 <!-- Header -->
                 <header class="header">
-                    <h1>🎙️ RE-VERSE</h1>
+                    <h1>RE-VERSE</h1>
                     <p class="tagline">Transform Documents into Engaging Podcasts with AI</p>
                 </header>
 
@@ -44,9 +41,9 @@
                 <section class="upload-section" id="uploadSection">
                     <div class="card glass-panel">
                         <h2>Upload Your Document</h2>
-                        
+
                         <form id="uploadForm" class="upload-form">
-                        
+
                             <div class="form-group">
                                 <label for="pdfFile" class="file-label glass-panel-inner">
                                     <span class="file-icon">📄</span>
@@ -56,16 +53,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="prompt">Content Focus</label>
-                                <textarea 
-                                    id="prompt" 
-                                    name="prompt" 
-                                    rows="4"
-                                    placeholder="What aspects should the podcast focus on?"
-                                    minlength="10"
-                                    maxlength="2000"
-                                    required
-                                ></textarea>
+                                <textarea id="prompt" name="prompt" rows="4"
+                                    placeholder="What aspects should the podcast focus on?" minlength="10"
+                                    maxlength="2000" required></textarea>
                                 <span class="char-count">0 / 2000</span>
                             </div>
 
@@ -101,7 +91,7 @@
                 <section class="progress-section" id="progressSection" style="display: none;">
                     <div class="card glass-panel">
                         <h2>Generating Your Podcast...</h2>
-                        
+
                         <div class="progress-container">
                             <div class="progress-bar glass-panel-inner">
                                 <div class="progress-fill" id="progressFill"></div>
@@ -136,7 +126,7 @@
                 <section class="result-section" id="resultSection" style="display: none;">
                     <div class="card glass-panel">
                         <h2>✅ Your Podcast is Ready!</h2>
-                        
+
                         <div class="audio-player">
                             <audio id="audioPlayer" controls></audio>
                         </div>
@@ -176,7 +166,8 @@
         </main>
     </div>
 
-    
+
     <script src="/static/js/app.js"></script>
 </body>
+
 </html>
