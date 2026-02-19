@@ -10,7 +10,7 @@ RE-VERSE is an AI-powered web application that converts PDF documents into engag
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Demo](#demo)
@@ -29,12 +29,12 @@ RE-VERSE is an AI-powered web application that converts PDF documents into engag
 
 ---
 
-## ✨ Features
+## Features
 
 ### Core Functionality
-- 📄 **PDF Processing** - Extract and analyze content from PDF documents
-- 🤖 **AI Script Generation** - Generate natural dialogue using Groq's Llama 3.1 model
-- 🎭 **Multiple Conversation Styles**:
+- **PDF Processing** - Extract and analyze content from PDF documents
+- **AI Script Generation** - Generate natural dialogue using Groq's Llama 3.1 model
+- **Multiple Conversation Styles**:
   - Student-Professor
   - Critique
   - Debate
