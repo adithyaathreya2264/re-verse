@@ -41,10 +41,10 @@ RE-VERSE is an AI-powered web application that converts PDF documents into engag
   - Interview
   - Casual Explainer
   - Storytelling
-- 🎙️ **Multi-Speaker Audio** - Realistic text-to-speech with different voices
-- ⏱️ **Flexible Duration** - Short (~3-5 min), Medium (~5-8 min), or Long (~8-12 min)
-- 📚 **History Sidebar** - ChatGPT-style interface to access previous podcasts
-- ☁️ **Cloud Storage** - Secure audio file storage on Google Cloud Storage
+- **Multi-Speaker Audio** - Realistic text-to-speech with different voices
+- **Flexible Duration** - Short (~3-5 min), Medium (~5-8 min), or Long (~8-12 min)
+- **History Sidebar** - ChatGPT-style interface to access previous podcasts
+- **Cloud Storage** - Secure audio file storage on Google Cloud Storage
 
 ### Technical Features
 - ⚡ **Asynchronous Processing** - Non-blocking job queue system
