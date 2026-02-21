@@ -47,11 +47,11 @@ RE-VERSE is an AI-powered web application that converts PDF documents into engag
 - **Cloud Storage** - Secure audio file storage on Google Cloud Storage
 
 ### Technical Features
-- ⚡ **Asynchronous Processing** - Non-blocking job queue system
-- 🔄 **Real-time Status Updates** - Live progress tracking with polling
-- 🎨 **Modern UI** - Responsive design with gradient themes
-- 🔐 **Secure** - Environment-based secrets management
-- 📊 **MongoDB Integration** - Persistent job storage and history
+- **Asynchronous Processing** - Non-blocking job queue system
+- **Real-time Status Updates** - Live progress tracking with polling
+- **Modern UI** - Responsive design with gradient themes
+- **Secure** - Environment-based secrets management
+- **MongoDB Integration** - Persistent job storage and history
 
 ---
 
