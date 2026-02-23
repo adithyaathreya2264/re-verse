@@ -123,7 +123,7 @@ RE-VERSE is an AI-powered web application that converts PDF documents into engag
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before installation, ensure you have:
 
@@ -142,7 +142,7 @@ Before installation, ensure you have:
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### 1. Clone the Repository
 ```
@@ -192,7 +192,7 @@ ffmpeg -version
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### 1. Create `.env` File
 
@@ -237,7 +237,7 @@ gsutil iam ch serviceAccount:YOUR-SERVICE-ACCOUNT@PROJECT.iam.gserviceaccount.co
 
 ---
 
-## 💻 Usage
+## Usage
 
 ### Running Locally
 Activate virtual environment
@@ -278,7 +278,7 @@ curl "http://localhost:8000/api/v1/job/{job_id}"
 
 ---
 
-## 📚 API Documentation
+## API Documentation
 
 ### Interactive Docs
 
@@ -308,7 +308,7 @@ Once running, visit:
 ```
 ---
 
-## 📁 Project Structure
+## Project Structure
 ```
 re-verse/
 ├── app/
@@ -349,7 +349,7 @@ re-verse/
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 ### Deploy to Render
 
@@ -387,7 +387,7 @@ fly deploy
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -406,7 +406,7 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -453,7 +453,7 @@ Error: Job failed after timeout
 
 ---
 
-## 📊 Usage Limits
+## Usage Limits
 
 | Service | Free Tier Limit |
 |---------|----------------|
@@ -466,13 +466,13 @@ After free tier, costs start at ~$16/million TTS characters.
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 👏 Acknowledgments
+## Acknowledgments
 
 - **Groq** for fast AI inference
 - **Google Cloud** for TTS and storage
@@ -480,17 +480,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **MongoDB** for database services
 - **FFmpeg** for audio processing
 
----
-
-## 📧 Contact
-
-**Your Name** - [@yourtwitter](https://twitter.com/yourtwitter)
-
-**Project Link:** [https://github.com/YOUR_USERNAME/re-verse](https://github.com/YOUR_USERNAME/re-verse)
-
----
-
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] User authentication system
 - [ ] Payment integration for premium features
