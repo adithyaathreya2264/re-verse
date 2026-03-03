@@ -37,13 +37,13 @@ async def test_database_operations():
         }
         
         job_id = await create_new_job(test_job_data)
-        print(f"✅ Created job with ID: {job_id}")
+        print(f"Created job with ID: {job_id}")
         
         # Step 3: Retrieve the job
         print(f"\n[3] Retrieving job {job_id}...")
         job = await get_job_result(job_id)
         if job:
-            print(f"✅ Job found:")
+            print(f"Job found:")
             print(f"   Status: {job['status']}")
             print(f"   Prompt: {job['prompt']}")
             print(f"   Created: {job['created_at']}")
@@ -52,7 +52,7 @@ async def test_database_operations():
         print(f"\n[4] Updating job status to PROCESSING...")
         success = await update_job_status(job_id, "PROCESSING")
         if success:
-            print("✅ Status updated successfully")
+            print("Status updated successfully")
         
         # Step 5: Update job status to COMPLETED with audio URL
         print(f"\n[5] Completing job with audio URL...")
@@ -62,13 +62,13 @@ async def test_database_operations():
             audio_url="https://storage.googleapis.com/bucket/audio.mp3"
         )
         if success:
-            print("✅ Job completed successfully")
+            print("Job completed successfully")
         
         # Step 6: Retrieve updated job
         print(f"\n[6] Retrieving completed job...")
         completed_job = await get_job_result(job_id)
         if completed_job:
-            print(f"✅ Final job state:")
+            print(f"Final job state:")
             print(f"   Status: {completed_job['status']}")
             print(f"   Audio URL: {completed_job['audio_url']}")
             print(f"   Completed: {completed_job['completed_at']}")
@@ -76,14 +76,14 @@ async def test_database_operations():
         # Step 7: Query jobs by status
         print(f"\n[7] Querying all COMPLETED jobs...")
         completed_jobs = await get_jobs_by_status("COMPLETED", limit=5)
-        print(f"✅ Found {len(completed_jobs)} completed jobs")
+        print(f"Found {len(completed_jobs)} completed jobs")
         
         print("\n" + "=" * 60)
-        print("✅ All database tests passed!")
+        print("All database tests passed!")
         print("=" * 60)
         
     except Exception as e:
-        print(f"\n❌ Test failed with error: {e}")
+        print(f"\nTest failed with error: {e}")
     
     finally:
         # Close connection
