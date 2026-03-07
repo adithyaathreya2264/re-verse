@@ -55,9 +55,9 @@ def test_request_validation():
             style=StyleType.STUDENT_PROFESSOR,
             duration=DurationType.MEDIUM
         )
-        print(f"   ✅ Valid: {request.model_dump_json(indent=2)}")
+        print(f"   Valid: {request.model_dump_json(indent=2)}")
     except ValidationError as e:
-        print(f"   ❌ Validation failed: {e}")
+        print(f"   Validation failed: {e}")
     
     # Invalid request - prompt too short
     print("\n[2] Invalid Request (short prompt):")
@@ -67,9 +67,9 @@ def test_request_validation():
             style=StyleType.CRITIQUE,
             duration=DurationType.SHORTER
         )
-        print(f"   ❌ Should have failed but didn't!")
+        print(f"   Should have failed but didn't!")
     except ValidationError as e:
-        print(f"   ✅ Validation correctly failed:")
+        print(f"   Validation correctly failed:")
         for error in e.errors():
             print(f"      - {error['loc'][0]}: {error['msg']}")
     
@@ -81,9 +81,9 @@ def test_request_validation():
             style=StyleType.DEBATE,
             duration=DurationType.LONGER
         )
-        print(f"   ❌ Should have failed but didn't!")
+        print(f"   Should have failed but didn't!")
     except ValidationError as e:
-        print(f"   ✅ Validation correctly failed:")
+        print(f"   Validation correctly failed:")
         for error in e.errors():
             print(f"      - {error['loc'][0]}: {error['msg']}")
 
@@ -156,9 +156,9 @@ if __name__ == "__main__":
         test_response_models()
         
         print("\n" + "=" * 60)
-        print("✅ All model tests passed!")
+        print("All model tests passed!")
         print("=" * 60)
     except Exception as e:
-        print(f"\n❌ Test failed with error: {e}")
+        print(f"\nTest failed with error: {e}")
         import traceback
         traceback.print_exc()
