@@ -75,9 +75,9 @@ def test_job_creation():
     print("=" * 60)
     
     # Create a real PDF
-    print("\n📄 Creating test PDF...")
+    print("\nCreating test PDF...")
     pdf_bytes = create_test_pdf()
-    print(f"✅ PDF created: {len(pdf_bytes)} bytes")
+    print(f"PDF created: {len(pdf_bytes)} bytes")
     
     # Prepare test data
     files = {
@@ -90,23 +90,23 @@ def test_job_creation():
     }
     
     # Make request
-    print("\n🚀 Sending job creation request...")
+    print("\nSending job creation request...")
     response = requests.post(f"{API_BASE}/generate-job", files=files, data=data)
     
-    print(f"\n📊 Status Code: {response.status_code}")
+    print(f"\nStatus Code: {response.status_code}")
     
     try:
         response_data = response.json()
-        print(f"📦 Response: {response_data}")
+        print(f"Response: {response_data}")
     except:
-        print(f"⚠️ Response: {response.text}")
+        print(f"Response: {response.text}")
         return None
     
     if response.status_code == 202:
-        print("\n✅ Job created successfully!")
+        print("\nJob created successfully!")
         return response_data.get('job_id')
     else:
-        print("\n❌ Job creation failed!")
+        print("\nJob creation failed!")
         return None
 
 
@@ -122,11 +122,11 @@ def test_job_status(job_id):
             response = requests.get(f"{API_BASE}/job/{job_id}")
             data = response.json()
             
-            print(f"\n⏱️  Attempt {attempt + 1}/{max_attempts}")
+            print(f"\nAttempt {attempt + 1}/{max_attempts}")
             print(f"   Status: {data['status']}")
             
             if data['status'] == 'PROCESSING':
-                print(f"   ⚙️  Processing in progress...")
+                print(f"Processing in progress...")
             
             if data['status'] in ['COMPLETED', 'FAILED']:
                 print(f"\n{'='*60}")
@@ -136,13 +136,13 @@ def test_job_status(job_id):
                 print(f"Audio URL: {data.get('audio_url')}")
                 
                 if data['status'] == 'COMPLETED':
-                    print(f"\n✅ SUCCESS! Audio generated successfully!")
-                    print(f"\n📊 Job Details:")
+                    print(f"\nSUCCESS! Audio generated successfully!")
+                    print(f"\nJob Details:")
                     print(f"   Title: (Check server logs)")
                     print(f"   Created: {data.get('created_at')}")
                     print(f"   Completed: {data.get('completed_at')}")
                 elif data['status'] == 'FAILED':
-                    print(f"\n❌ FAILED!")
+                    print(f"\nFAILED!")
                     print(f"   Error: {data.get('error_message')}")
                 
                 break
@@ -150,14 +150,14 @@ def test_job_status(job_id):
             time.sleep(3)  # Wait 3 seconds between polls
             
         except Exception as e:
-            print(f"\n❌ Error during polling: {e}")
+            print(f"\nError during polling: {e}")
             break
     else:
-        print(f"\n⚠️  Timeout: Job still processing after {max_attempts * 3} seconds")
+        print(f"\nTimeout: Job still processing after {max_attempts * 3} seconds")
 
 
 if __name__ == "__main__":
-    print("\n" + "🎙️  RE-VERSE API Test Suite ".center(60, "="))
+    print("\n" + "RE-VERSE API Test Suite ".center(60, "="))
     print()
     
     try:
@@ -165,8 +165,8 @@ if __name__ == "__main__":
         try:
             import reportlab
         except ImportError:
-            print("❌ Error: reportlab not installed")
-            print("📦 Install it with: pip install reportlab")
+            print("Error: reportlab not installed")
+            print("Install it with: pip install reportlab")
             exit(1)
         
         # Test job creation
@@ -177,13 +177,13 @@ if __name__ == "__main__":
             test_job_status(job_id)
         
         print("\n" + "=" * 60)
-        print("✅ Test Suite Completed!")
+        print("Test Suite Completed!")
         print("=" * 60)
         print()
         
     except KeyboardInterrupt:
-        print("\n\n⚠️  Tests interrupted by user")
+        print("\n\nTests interrupted by user")
     except Exception as e:
-        print(f"\n❌ Test failed with error: {e}")
+        print(f"\nTest failed with error: {e}")
         import traceback
         traceback.print_exc()
