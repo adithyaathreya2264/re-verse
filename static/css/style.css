@@ -1,6 +1,4 @@
-/* ==============================
-   GLOBAL RESET
-============================== */
+/*GLOBAL RESET*/
 * {
     margin: 0;
     padding: 0;
@@ -35,9 +33,7 @@ body {
     }
 }
 
-/* ==============================
-   INTRO OVERLAY
-============================== */
+/* INTRO OVERLAY */
 #intro-overlay {
     position: fixed;
     top: 0;
@@ -83,9 +79,7 @@ body {
     }
 }
 
-/* ==============================
-   GLASS PANEL — Light Theme
-============================== */
+/* GLASS PANEL — Light Theme */
 .glass-panel {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
@@ -101,9 +95,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* ==============================
-   STRUCTURE
-============================== */
+/* STRUCTURE */
 .container {
     max-width: 900px;
     margin: 0 auto;
@@ -131,9 +123,7 @@ body {
     font-weight: 500;
 }
 
-/* ==============================
-   MAIN CONTENT
-============================== */
+/* MAIN CONTENT */
 .main-content {
     margin-left: 0;
     /* Removed sidebar margin */
@@ -141,9 +131,7 @@ body {
     width: 100%;
 }
 
-/* ==============================
-   CARDS
-============================== */
+/* CARDS */
 .card {
     padding: 2.5rem;
     margin-bottom: 2rem;
@@ -156,9 +144,7 @@ body {
     font-weight: 600;
 }
 
-/* ==============================
-   FORM INPUTS
-============================== */
+/* FORM INPUTS */
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -218,9 +204,7 @@ textarea::placeholder {
     font-size: 1.5rem;
 }
 
-/* ==============================
-   BUTTONS
-============================== */
+/* BUTTONS */
 .btn-primary {
     width: 100%;
     padding: 1.25rem;
@@ -259,9 +243,7 @@ textarea::placeholder {
     background: #059669;
 }
 
-/* ==============================
-   PROGRESS BAR
-============================== */
+/* PROGRESS BAR */
 .progress-container {
     margin: 2rem 0;
 }
@@ -326,9 +308,7 @@ textarea::placeholder {
     font-weight: 500;
 }
 
-/* ==============================
-   AUDIO PLAYER
-============================== */
+/* AUDIO PLAYER */
 .audio-player audio {
     width: 100%;
     border-radius: 12px;
@@ -349,9 +329,7 @@ textarea::placeholder {
     color: #1f2937;
 }
 
-/* ==============================
-   FOOTER
-============================== */
+/* FOOTER */
 .footer {
     text-align: center;
     margin-top: 4rem;
@@ -360,9 +338,7 @@ textarea::placeholder {
     font-weight: 500;
 }
 
-/* ==============================
-   RESPONSIVE
-============================== */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .header h1 {
         font-size: 2.5rem;
