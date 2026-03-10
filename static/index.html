@@ -46,7 +46,7 @@
 
                             <div class="form-group">
                                 <label for="pdfFile" class="file-label glass-panel-inner">
-                                    <span class="file-icon">📄</span>
+                                    <span class="file-icon"></span>
                                     <span id="fileName">Choose PDF file (max 50MB)</span>
                                     <input type="file" id="pdfFile" name="file" accept=".pdf" required>
                                 </label>
@@ -62,21 +62,21 @@
                             <div class="form-group">
                                 <label for="style">Conversation Style</label>
                                 <select id="style" name="style" required>
-                                    <option value="Student-Professor">👨‍🎓 Student-Professor</option>
-                                    <option value="Critique">🔍 Critique</option>
-                                    <option value="Debate">⚖️ Debate</option>
-                                    <option value="Interview">🎤 Interview</option>
-                                    <option value="Casual-Explainer">💬 Casual Explainer</option>
-                                    <option value="Storytelling">📖 Storytelling</option>
+                                    <option value="Student-Professor">Student-Professor</option>
+                                    <option value="Critique">Critique</option>
+                                    <option value="Debate">Debate</option>
+                                    <option value="Interview">Interview</option>
+                                    <option value="Casual-Explainer">Casual Explainer</option>
+                                    <option value="Storytelling">Storytelling</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="duration">Audio Length</label>
                                 <select id="duration" name="duration" required>
-                                    <option value="SHORTER">⚡ Shorter (~3-5 min)</option>
-                                    <option value="MEDIUM" selected>🎯 Medium (~5-8 min)</option>
-                                    <option value="LONGER">📚 Longer (~8-12 min)</option>
+                                    <option value="SHORTER">Shorter (~3-5 min)</option>
+                                    <option value="MEDIUM" selected>Medium (~5-8 min)</option>
+                                    <option value="LONGER">Longer (~8-12 min)</option>
                                 </select>
                             </div>
 
@@ -101,19 +101,19 @@
 
                         <div class="status-steps">
                             <div class="step glass-panel-inner" id="step1">
-                                <span class="step-icon">📄</span>
+                                <span class="step-icon"></span>
                                 <span class="step-text">Extracting text</span>
                             </div>
                             <div class="step glass-panel-inner" id="step2">
-                                <span class="step-icon">🤖</span>
+                                <span class="step-icon"></span>
                                 <span class="step-text">Generating script</span>
                             </div>
                             <div class="step glass-panel-inner" id="step3">
-                                <span class="step-icon">🎙️</span>
+                                <span class="step-icon"></span>
                                 <span class="step-text">Creating audio</span>
                             </div>
                             <div class="step glass-panel-inner" id="step4">
-                                <span class="step-icon">☁️</span>
+                                <span class="step-icon"></span>
                                 <span class="step-text">Uploading</span>
                             </div>
                         </div>
@@ -125,14 +125,14 @@
                 <!-- Result -->
                 <section class="result-section" id="resultSection" style="display: none;">
                     <div class="card glass-panel">
-                        <h2>✅ Your Podcast is Ready!</h2>
+                        <h2>Your Podcast is Ready!</h2>
 
                         <div class="audio-player">
                             <audio id="audioPlayer" controls></audio>
                         </div>
 
                         <a id="downloadBtn" class="btn-secondary" download="podcast.mp3">
-                            <span>⬇️ Download MP3</span>
+                            <span>Download MP3</span>
                         </a>
 
                         <div class="metadata glass-panel-inner">
@@ -151,7 +151,7 @@
                 <!-- Error -->
                 <section class="error-section" id="errorSection" style="display: none;">
                     <div class="card error-card glass-panel">
-                        <h2>❌ Generation Failed</h2>
+                        <h2>Generation Failed</h2>
                         <p class="error-message" id="errorMessage"></p>
                         <button class="btn-primary" onclick="resetForm()">Try Again</button>
                     </div>
