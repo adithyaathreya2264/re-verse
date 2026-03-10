@@ -8,7 +8,7 @@ from typing import List
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
     
-    # ==================== API Configuration ====================
+    # API Configuration
     api_title: str = "RE-VERSE - AI Podcast Generator"
     api_version: str = "1.0.0"
     api_description: str = "Transform PDF documents into engaging AI-generated podcasts"
@@ -16,33 +16,33 @@ class Settings(BaseSettings):
     host: str = "127.0.0.1"
     port: int = 8000
     
-    # ==================== MongoDB Configuration ====================
+    # MongoDB Configuration 
     mongodb_uri: str = "mongodb://localhost:27017"
     mongodb_db_name: str = "reverse_db"
     mongodb_collection_jobs: str = "jobs"
     
-    # ==================== AI Model Configuration ====================
+    # AI Model Configuration
     ai_provider: str = "groq"  # "groq" or "gemini"
     groq_api_key: str = ""
     google_api_key: str = ""
     
-    # ==================== Google Cloud Storage Configuration ====================
+    # Google Cloud Storage Configuration
     gcs_project_id: str = "your-project-id"
     gcs_bucket_name: str = "re-verse-audio"
     gcs_credentials_path: str = "./re-verse-476206-4e8cc369c480.json"
     gcs_signed_url_expiration_days: int = 7
     
-    # ==================== File Upload Configuration ====================
+    # File Upload Configuration
     max_file_size_mb: int = 50
     allowed_file_types: str = "application/pdf"
     
-    # ==================== Logging Configuration ====================
+    # Logging Configuration
     log_level: str = "info"
     
-    # ==================== CORS Configuration ====================
+    # CORS Configuration 
     cors_origins: str = "http://localhost:8000,http://127.0.0.1:8000"
     
-    # ==================== TTS Voice Configuration ====================
+    # TTS Voice Configuration 
     speaker_1_voice: str = "Kore"
     speaker_2_voice: str = "Puck"
     
@@ -53,7 +53,7 @@ class Settings(BaseSettings):
         extra="ignore"
     )
     
-    # ==================== Helper Properties ====================
+    # Helper Properties
     
     @property
     def max_file_size_bytes(self) -> int:
@@ -67,7 +67,7 @@ class Settings(BaseSettings):
     def cors_origins_list(self) -> List[str]:
         return [origin.strip() for origin in self.cors_origins.split(",")]
     
-    # ==================== Duration/Token Configuration ====================
+    # Duration/Token Configuration
     
     def get_duration_tokens(self, duration: str) -> int:
         """Get max output tokens based on duration."""
@@ -96,7 +96,7 @@ class Settings(BaseSettings):
         }
         return char_limit_map.get(duration, 8000)
     
-    # ==================== GCS Helper Methods ====================
+    # GCS Helper Methods
     
     def get_gcs_blob_name(self, job_id: str) -> str:
         return f"podcasts/{job_id}.mp3"
