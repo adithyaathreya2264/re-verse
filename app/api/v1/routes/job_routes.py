@@ -27,7 +27,7 @@ from app.utils.file_helpers import (
 router = APIRouter()
 
 
-# ==================== Job Creation Endpoint ====================
+#Job Creation Endpoint
 
 @router.post(
     "/generate-job",
@@ -70,7 +70,7 @@ async def create_generation_job(
     - **created_at**: Job creation timestamp
     """
     try:
-        # ========== 1. Validate File Type ==========
+        # 1. Validate File Type
         is_valid_type, type_error = validate_file_type(file)
         if not is_valid_type:
             logger.warning(f"File type validation failed: {type_error}")
@@ -79,7 +79,7 @@ async def create_generation_job(
                 detail=type_error
             )
         
-        # ========== 2. Read and Validate File Size ==========
+        # 2. Read and Validate File Size
         file_contents = await read_upload_file(file)
         file_size = get_file_size(file_contents)
         
@@ -91,11 +91,11 @@ async def create_generation_job(
                 detail=size_error
             )
         
-        # ========== 3. Sanitize Filename ==========
+        # 3. Sanitize Filename
         safe_filename = sanitize_filename(file.filename)
         logger.info(f"Processing file: {safe_filename} ({file_size} bytes)")
         
-        # ========== 4. Validate Enums ==========
+        # 4. Validate Enums
         try:
             style_enum = StyleType(style)
             duration_enum = DurationType(duration)
@@ -105,10 +105,10 @@ async def create_generation_job(
                 detail=f"Invalid style or duration value: {str(e)}"
             )
         
-        # ========== 5. Generate Unique Job ID ==========
+        # 5. Generate Unique Job ID
         job_id = str(uuid.uuid4())
         
-        # ========== 6. Create Job Document ==========
+        # 6. Create Job Document
         job_data = {
             "prompt": prompt.strip(),
             "style": style_enum.value,
@@ -127,9 +127,9 @@ async def create_generation_job(
                 detail="Failed to create job in database"
             )
         
-        logger.info(f"✅ Job created: {created_job_id}")
+        logger.info(f"Job created: {created_job_id}")
         
-        # ========== 7. Trigger Background Task ==========
+        # 7. Trigger Background Task
         # Import here to avoid circular dependency
         from app.services.ai_worker import generate_audio_task
         
@@ -142,9 +142,9 @@ async def create_generation_job(
             duration=duration_enum.value
         )
         
-        logger.info(f"🚀 Background task queued for job: {created_job_id}")
+        logger.info(f" Background task queued for job: {created_job_id}")
         
-        # ========== 8. Return Response ==========
+        # 8. Return Response
         return JobResponse(
             job_id=created_job_id,
             status=JobStatus.PENDING,
@@ -156,14 +156,14 @@ async def create_generation_job(
         # Re-raise HTTP exceptions as-is
         raise
     except Exception as e:
-        logger.error(f"❌ Unexpected error creating job: {e}", exc_info=True)
+        logger.error(f" Unexpected error creating job: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An unexpected error occurred while creating the job"
         )
 
 
-# ==================== Job Status Endpoint ====================
+# Job Status Endpoint
 
 @router.get(
     "/job/{job_id}",
@@ -222,13 +222,13 @@ async def get_job_status(job_id: str):
             completed_at=job.get("completed_at")
         )
         
-        logger.info(f"✅ Job status retrieved: {job_id} - {job['status']}")
+        logger.info(f" Job status retrieved: {job_id} - {job['status']}")
         return response
         
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Error retrieving job status: {e}", exc_info=True)
+        logger.error(f" Error retrieving job status: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An error occurred while retrieving job status"
