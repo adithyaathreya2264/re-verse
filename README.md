@@ -13,7 +13,6 @@ RE-VERSE is an AI-powered web application that converts PDF documents into engag
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
 - [Architecture](#architecture)
 - [Technology Stack](#technology-stack)
 - [Prerequisites](#prerequisites)
