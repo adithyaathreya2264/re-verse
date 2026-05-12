@@ -337,12 +337,7 @@ re-verse/
 └── README.md # This file
 ```
 
-
 ---
-
-## Deployment
-
-### Deploy to Render
 
 1. **Push to GitHub:**
 ```
