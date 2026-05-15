@@ -467,9 +467,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Roadmap
 
-- [ ] User authentication system
-- [ ] Payment integration for premium features
-- [ ] Additional voice options
+- User authentication system
+- Payment integration for premium features
+- Additional voice options
 - [ ] Support for more file formats (DOCX, TXT)
 - [ ] Podcast editing capabilities
 - [ ] Custom voice cloning
